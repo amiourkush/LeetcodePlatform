@@ -54,6 +54,16 @@ const {Schema} = mongoose;
             required : true
         }
     }],
+    referenceCode:[{
+        language:{
+            type : String,
+            required : true
+        },
+        completecode : {
+            type : String,
+            required : true
+        }
+    }],
     problemCreator :{
         type : Schema.Types.ObjectId,
         ref :"user",
