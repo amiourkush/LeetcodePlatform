@@ -3,12 +3,14 @@ require("dotenv").config();
 const main = require("./config/db")
 const cookieParser = require("cookie-parser")
 const authRouter = require("./routes/userAuth")
+const problemRouter = require("./routes/problemFetch")
 const redisClient = require("./config/redis")
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
 app.use("/user",authRouter)
+app.use("/user",problemRouter)
 
 
 

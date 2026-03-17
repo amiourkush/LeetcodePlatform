@@ -9,38 +9,81 @@ const getlanguagebyId =(lang)=>{
 }
 
 const submitBatch = async(submission)=>{
-   
-   const options = {
-      method: 'POST',
-      url: 'https://judge0-ce.p.rapidapi.com/submissions/batch',
-params: {
-  base64_encoded: 'true'
-},
-headers: {
-  'x-rapidapi-key':RAPID_KEY,
-  'x-rapidapi-host': 'judge0-ce.p.rapidapi.com',
-  'Content-Type': 'application/json'
-},
-data :{
-   submission
-}
-   }
 
-   async function fetchData() {
-       try{
-      const response = await axios.request(options);
-      return response.data;
-       
-   }
-   catch(err){
-        console.log(err)
-   }
-   
-   }
 
-   return await fetchData();
 
+const options = {
+  method: 'POST',
+  url: 'https://judge0-ce.p.rapidapi.com/submissions/batch',
+  params: {
+    base64_encoded: 'true'
+  },
+  headers: {
+    'x-rapidapi-key': RAPID_KEY,
+    'x-rapidapi-host': 'judge0-ce.p.rapidapi.com',
+    'Content-Type': 'application/json'
+  },
+  data: {
+    submissions}
+  
+};
+
+async function fetchData() {
+	try {
+		const response = await axios.request(options);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+	}
 }
 
-module.exports ={getlanguagebyId,submitBatch};
+return await fetchData();
+
+}
+
+const waiting = async(timer)=>{
+   setTimeout(()=>{
+      return 1;
+   },timer)
+}
+
+const submitToken = async(token)=>{
+
+   const tokenss = token.join(",");
+  
+
+const options = {
+  method: 'GET',
+  url: 'https://judge0-ce.p.rapidapi.com/submissions/batch',
+  params: {
+    tokens: tokenss,
+    base64_encoded: 'true',
+    fields: '*'
+  },
+  headers: {
+    'x-rapidapi-key': RAPID_KEY,
+    'x-rapidapi-host': 'judge0-ce.p.rapidapi.com',
+    'Content-Type': 'application/json'
+  }
+};
+
+async function fetchData() {
+	try {
+		const response = await axios.request(options);
+		result =response.data;
+	} catch (error) {
+		console.error(error);
+	}
+}
+while(true){
+const result =await fetchData();
+const IsObtained=result.submissions.every((r)=>r.status_id>=2);
+if(IsObtained){
+   return result.submissions;
+}
+waiting(1000);
+}
+}
+
+module.exports ={getlanguagebyId,submitBatch,submitToken};
 

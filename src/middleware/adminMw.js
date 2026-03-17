@@ -28,6 +28,7 @@ const adminMw = async(req,res,next)=>{
         if(isBlocked){
             throw new Error("Invalid token")
         }
+        req.result= result;
         next();
     }
     catch(err){
