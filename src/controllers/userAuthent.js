@@ -77,7 +77,7 @@ const adminRegister = async(req,res)=>{
          validate(req.body);
          const {firstName,emailId,password} = req.body;
 
-         console.log(req.body)
+        //console.log(req.body)
 
          req.body.password= await bcrypt.hash(password,10);
          const user= await User.create(req.body);

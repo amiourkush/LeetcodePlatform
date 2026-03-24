@@ -14,13 +14,12 @@ const submitBatch = async(submission)=>{
 
 const options = {
   method: 'POST',
-  url: 'https://judge0-ce.p.rapidapi.com/submissions/batch',
+  url: 'http://localhost:2358/submissions/batch',
   params: {
-    base64_encoded: 'true'
+    base64_encoded: 'false'
   },
   headers: {
-    'x-rapidapi-key': RAPID_KEY,
-    'x-rapidapi-host': 'judge0-ce.p.rapidapi.com',
+   
     'Content-Type': 'application/json'
   },
   data: {
@@ -54,15 +53,14 @@ const submitToken = async(token)=>{
 
 const options = {
   method: 'GET',
-  url: 'https://judge0-ce.p.rapidapi.com/submissions/batch',
+  url: 'http://localhost:2358/submissions/batch',
   params: {
     tokens: tokenss,
-    base64_encoded: 'true',
+    base64_encoded: 'false',
     fields: '*'
   },
   headers: {
-    'x-rapidapi-key': RAPID_KEY,
-    'x-rapidapi-host': 'judge0-ce.p.rapidapi.com',
+    
     'Content-Type': 'application/json'
   }
 };
@@ -70,7 +68,7 @@ const options = {
 async function fetchData() {
 	try {
 		const response = await axios.request(options);
-		result =response.data;
+		return response.data;
 	} catch (error) {
 		console.error(error);
 	}
