@@ -49,3 +49,6 @@ const submissionSchema = new Schema({
 
 
 },{timestamps:true});
+
+const submission = mongoose.model("submission",submissionSchema);
+module.exports = submission;
