@@ -71,5 +71,5 @@ const {Schema} = mongoose;
     }
  })
 
- const problem = mongoose.model("problem",problemSchema);
- module.exports = problem;
+ const Problem = mongoose.model("problem",problemSchema);
+ module.exports = Problem;

@@ -35,10 +35,22 @@ const userSchema = new Schema({
         default : "user"
     },
     problemSolved :{
-        type : [String]
+        type : [{
+            type:Schema.type.ObjectId,
+            ref:"problem"
+        }],
+        unique:true
 
     }
 },{timestamps:true})
+
+//this is the post operation that will be executed when findByIdAndDelete will take place.
+userSchema.post("findOneAndDelete",async function (doc) { //this doc means it contains the profile or all the info about deleted user. As this deleted info is returned by findByIdAndDelete
+    if(doc){
+        await mongoose.model("submission").deleteMany({UserId:doc._id});
+    }
+    
+})
 
 const User = mongoose.model("user",userSchema)
 module.exports = User;

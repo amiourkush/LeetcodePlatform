@@ -1,4 +1,5 @@
 const redisClient = require("../config/redis");
+const submission = require("../models/submission");
 const User = require("../models/user");
 const validate = require("../utils/validate")
 const bcrypt = require("bcrypt");
@@ -91,6 +92,17 @@ const adminRegister = async(req,res)=>{
     }
     catch(err){
         console.log(err);
+    }
+}
+
+const deleteProfile = async(req,res)=>{
+    try{
+       const userId = req.result._id;
+       await User.findByIdAndDelete(userId);
+      // await submission.deleteMany({userId});   this code can also be used and also we can create post Schema in UserSchema in which if any user document is deleted , then automatically delete it from submission also.(for this go to user.js(in models))
+       res.send("Profile Deleted");
+    }catch(err){
+        res.status(500).send("Server Error"+err);
     }
 }
 
